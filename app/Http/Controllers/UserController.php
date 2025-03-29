@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserModel;
 use App\Models\LevelModel;
 use Illuminate\Http\Request;
-use App\Models\UserModel;
 use Illuminate\Support\Facades\Hash;
-use Yajra\DataTables\DataTables as DataTablesDataTables;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\DataTables as DataTablesDataTables;
 
 class UserController extends Controller
 {
@@ -288,6 +289,55 @@ class UserController extends Controller
             return redirect('/user')->with('success', 'Data user berhasil dihapus');
         } catch (\Illuminate\Database\QueryException $e) {
             return redirect('/user')->with('error', 'Data user gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
+        }
+    }
+
+    public function import()
+    {
+        return view('user.import');
+    }
+
+    public function import_ajax(Request $request)
+    {
+        $rules = [
+            'file_user' => ['required', 'mimes:xlsx,xls', 'max: 1024'],
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validasi Gagal',
+                'msgField' => $validator->errors(),
+            ]);
+        }
+
+        $file = $request->file('file_user');
+        $spreadsheet = IOFactory::load($file->getRealPath());
+        $sheet = $spreadsheet->getActiveSheet();
+        $rows = $sheet->toArray();
+
+        $insert = [];
+        $header = array_shift($rows); // Ambil header
+
+        foreach ($rows as $row) {
+            if (!empty($row[0])) {
+                $insert[] = [
+                    'username' => $row[0],
+                    'nama' => $row[1],
+                    'password' => bcrypt($row[2]),
+                    'level_id' => $row[3],
+                ];
+            }
+        }
+
+        if (!empty($insert)) {
+            UserModel::insertOrIgnore($insert);
+
+            return redirect('/user')->with('success', 'Data user berhasil diimport: ' . count($insert) . ' record');
+        } else {
+            return redirect('/user')->with('error', 'Data user kosong');
         }
     }
 }

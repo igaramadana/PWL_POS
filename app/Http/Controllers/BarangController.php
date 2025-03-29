@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 use App\Models\KategoriModel;
 use Yajra\DataTables\DataTables;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Support\Facades\Validator;
 
 class BarangController extends Controller
@@ -362,7 +360,7 @@ class BarangController extends Controller
             //     'message' => 'Data berhasil diimport: ' . count($insert) . ' record',
             // ]);
         } else {
-            return redirect('/barang')->with('error', 'Data barang gagal diimport');
+            return redirect('/barang')->with('error', 'Data barang kosong');
         }
     }
 }
