@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BarangController;
-use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\SupplierController;
 
 /*
@@ -92,7 +93,7 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::middleware(['authorize:ADM, MNG'])->group(function () {
+    Route::middleware(['authorize:ADM,MGR'])->group(function () {
         Route::group(['prefix' => 'kategori'], function () {
             Route::get('/', [KategoriController::class, 'index']);
             Route::post('/list', [KategoriController::class, 'list']);
@@ -123,7 +124,7 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::middleware(['authorize:ADM, MNG'])->group(function () {
+    Route::middleware(['authorize:ADM,MGR'])->group(function () {
         Route::group(['prefix' => 'supplier'], function () {
             Route::get('/', [SupplierController::class, 'index']);
             Route::post('/list', [SupplierController::class, 'list']);
@@ -155,7 +156,7 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::middleware(['authorize:ADM, MNG'])->group(function () {
+    Route::middleware(['authorize:ADM,MGR'])->group(function () {
         Route::group(['prefix' => 'barang'], function () {
             Route::get('/', [BarangController::class, 'index']);
             Route::post('/list', [BarangController::class, 'list']);
@@ -183,6 +184,14 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/export_excel', [BarangController::class, 'export_excel']);
             // Export PDF
             Route::get('/export_pdf', [BarangController::class, 'export_pdf']);
+        });
+    });
+
+    Route::middleware(['auth', 'authorize:ADM,MGR,STF'])->group(function () {
+        Route::group(['prefix' => 'profile'], function () {
+            Route::get('/', [ProfileController::class, 'index']);
+            Route::put('/update/{id}', [ProfileController::class, 'update']);
+            Route::post('/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
         });
     });
 });
