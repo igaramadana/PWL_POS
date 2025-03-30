@@ -1,3 +1,11 @@
 *
 !public/
 !.gitignore
+
+# Ignore uploaded user avatars
+/public/avatars/*
+!/public/avatars/.gitkeep
+
+# Ignore storage avatars if using storage
+/storage/app/public/avatars/*
+!/storage/app/public/avatars/.gitkeep
