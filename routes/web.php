@@ -55,6 +55,8 @@ Route::middleware(['auth'])->group(function () {
             // Import
             Route::get('/import', [UserController::class, 'import']);
             Route::post('/import_ajax', [UserController::class, 'import_ajax']);
+            // Export_Excel
+            Route::get('/export_excel', [UserController::class, 'export_excel']);
         });
     });
 
@@ -81,6 +83,8 @@ Route::middleware(['auth'])->group(function () {
             // Import
             Route::get('/import', [LevelController::class, 'import']);
             Route::post('/import_ajax', [LevelController::class, 'import_ajax']);
+            // Export_Excel
+            Route::get('/export_excel', [LevelController::class, 'export_excel']);
         });
     });
 
@@ -108,6 +112,8 @@ Route::middleware(['auth'])->group(function () {
             // Import
             Route::get('/import', [KategoriController::class, 'import']);
             Route::post('/import_ajax', [KategoriController::class, 'import_ajax']);
+            // Export Excel
+            Route::get('/export_excel', [KategoriController::class, 'export_excel']);
         });
     });
 
@@ -136,6 +142,8 @@ Route::middleware(['auth'])->group(function () {
             // Import
             Route::get('/import', [SupplierController::class, 'import']);
             Route::post('/import_ajax', [SupplierController::class, 'import_ajax']);
+            // Export
+            Route::get('/export_excel', [SupplierController::class, 'export_excel']);
         });
     });
 
