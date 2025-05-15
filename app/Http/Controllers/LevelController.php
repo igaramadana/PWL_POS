@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\LevelModel;
+use App\Models\UserModel;
+use Laravolt\Avatar\Avatar;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;

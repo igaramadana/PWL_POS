@@ -190,8 +190,8 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth', 'authorize:ADM,MGR,STF'])->group(function () {
         Route::group(['prefix' => 'profile'], function () {
             Route::get('/', [ProfileController::class, 'index']);
-            Route::put('/update/{id}', [ProfileController::class, 'update']);
-            Route::post('/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
+            Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+            Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
         });
     });
 });

@@ -2,10 +2,10 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-            <img src="{{ auth()->user()->avatar_url }}" class="img-circle elevation-2" style="width: 36px; height: 36px;" alt="User Image">
+            <img src="{{ auth()->user()->getAvatarUrl() }}" class="img-circle elevation-2" style="width: 36px; height: 36px; object-fit: cover;" alt="User Image">
         </div>
         <div class="info">
-            <a href="" class="d-block">
+            <a href="{{ url('/profile') }}" class="d-block">
                 @auth
                     {{ auth()->user()->nama }}
                 @endauth

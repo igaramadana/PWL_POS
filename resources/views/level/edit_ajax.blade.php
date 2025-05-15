@@ -22,7 +22,7 @@
         @csrf
         @method('PUT')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
+            <div class="modal-content">POST
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Edit Data Level</h5>
 

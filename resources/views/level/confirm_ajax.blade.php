@@ -72,7 +72,7 @@
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Berhasil',
-                                    text: response.message
+                                    text: response.messagee
                                 });
                                 dataUser.ajax.reload();
                             } else {

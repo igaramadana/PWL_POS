@@ -45,6 +45,7 @@
                     <th>ID</th>
                     <th>Kode Barang</th>
                     <th>Nama Barang</th>
+                    <th>Gambar</th>
                     <th>Nama Kategori</th>
                     <th>Harga Beli</th>
                     <th>Harga Jual</th>
@@ -99,6 +100,12 @@
                         className: "",
                         orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
                         searchable: true // searchable: true, jika ingin kolom ini bisa dicari
+                    },
+                    {
+                        data: "image_barang",
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: "kategori.kategori_nama",

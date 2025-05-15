@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Laravolt\Avatar\Avatar;
 use Illuminate\Database\Eloquent\Model;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -34,14 +36,6 @@ class UserModel extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo(LevelModel::class, 'level_id', 'level_id');
     }
-
-    protected function avatar(): Attribute
-    {
-        return Attribute::make(
-            get: fn($avatar) => url('/public/avatars/' . $avatar),
-        );
-    }
-
     public function getRoleName(): string
     {
         return $this->level->level_nama;
@@ -57,11 +51,13 @@ class UserModel extends Authenticatable implements JWTSubject
         return $this->level->level_kode;
     }
 
-    public function getAvatarUrlAttribute()
+    public function getAvatarUrl(): string
     {
-        if ($this->avatar) {
+        if ($this->avatar && file_exists(public_path($this->avatar))) {
             return asset($this->avatar);
+        } else {
+            $avatar = new Avatar();
+            return $avatar->create($this->nama)->toBase64();
         }
-        return asset('images/default-avatar.png');
     }
 }
